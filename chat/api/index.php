@@ -11,6 +11,7 @@ $app->post('/wines', 'addWine');
 $app->put('/wines/:id', 'updateWine');
 $app->delete('/wines/:id', 'deleteWine');
 $app->get('/messages', 'getMessages');
+$app->post('/messages', 'addMessage');
 
 $app->run();
 
@@ -137,6 +138,26 @@ function getMessages() {
         $db = null;
         echo json_encode($messages);
     } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+}
+
+function addMessage() {
+    error_log('addMessage\n', 3, '/var/tmp/php.log');
+    $request = Slim::getInstance()->request();
+    $message = json_decode($request->getBody());
+    $sql = "INSERT INTO message (msg_time, username, contents) VALUES (NOW(), :username, :contents)";
+    try {
+        $db = getChatDbConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("username", $message->username);
+        $stmt->bindParam("contents", $message->contents);
+        $stmt->execute();
+        $message->id = $db->lastInsertId();
+        $db = null;
+        echo json_encode($message);
+    } catch(PDOException $e) {
+        error_log($e->getMessage(), 3, '/var/tmp/php.log');
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 }
