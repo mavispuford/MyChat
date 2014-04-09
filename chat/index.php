@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:ng="http://angularjs.org">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,7 +19,7 @@
       <!--<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
     <!--[endif]-->
   </head>
-  <body>
+  <body ng:controller="MyChatCtrl">
     <div class="container">
         <div class="header">
             <ul class="nav nav-pills pull-right">
@@ -29,7 +29,7 @@
             <h3 class="text-muted">MyChat</h3>
         </div>
 
-        <div class="jumbotron">
+        <div class="jumbotron" ng-view>
 <!--            <h1>Jumbotron heading</h1>-->
             <p>Message 1</p>
             <p>Message 2</p>
@@ -43,7 +43,7 @@
 
         <div class="row">
 
-            <form ng-submit="addMessage()">
+            <form ng-submit="addMessage(username, contents)">
                 <div class="col-lg-8">
                     <input type="text" class="form-control" ng-model="contents" placeholder="Message" />
                 </div>
@@ -54,8 +54,6 @@
                     <input class="btn btn-primary pull-right" style="margin: 4px;" type="submit" value="Submit" id="btn-chat" />
                 </div>
             </form>
-<!--                <h4>Subheading</h4>-->
-<!--                <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>-->
 
         </div>
 
@@ -68,6 +66,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="js/controllers"></script>
   </body>
 </html>
