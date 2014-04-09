@@ -47,3 +47,15 @@ function WineDetailCtrl(Wine) {
     }
 
 }
+
+function ChatCtrl(){
+    this.addMessage = function (Message) {
+        $http({ method: 'POST', url: '/api/messages', body: Message}).
+            success(function (data, status, headers, config) {
+                // ...
+            }).
+            error(function (data, status, headers, config) {
+                // ...
+            });
+    }
+}
