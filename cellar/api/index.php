@@ -10,6 +10,7 @@ $app->get('/wines/search/:query', 'findByName');
 $app->post('/wines', 'addWine');
 $app->put('/wines/:id', 'updateWine');
 $app->delete('/wines/:id', 'deleteWine');
+$app->get('/messages', 'getMessages');
 
 $app->run();
 
@@ -58,7 +59,7 @@ function addWine() {
 		$stmt->execute();
 		$wine->id = $db->lastInsertId();
 		$db = null;
-		echo json_encode($wine); 
+		echo json_encode($wine);
 	} catch(PDOException $e) {
 		error_log($e->getMessage(), 3, '/var/tmp/php.log');
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
@@ -125,4 +126,27 @@ function getConnection() {
 	$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);	
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	return $dbh;
+}
+
+function getMessages() {
+    $sql = "SELECT * FROM message ORDER BY msg_time DESC LIMIT 10";
+    try {
+        $db = getChatDbConnection();
+        $stmt = $db->query($sql);
+        $messages = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo json_encode($messages);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+}
+
+function getChatDbConnection() {
+    $dbhost="127.0.0.1";
+    $dbuser="app";
+    $dbpass="1234pass";
+    $dbname="chat";
+    $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    return $dbh;
 }
