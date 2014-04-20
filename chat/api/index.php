@@ -130,7 +130,7 @@ function getConnection() {
 }
 
 function getMessages() {
-    $sql = "SELECT * FROM message ORDER BY msg_time DESC LIMIT 10";
+    $sql = "SELECT * FROM (SELECT * FROM message ORDER BY msg_time DESC LIMIT 10) AS `table` ORDER by msg_time ASC";
     try {
         $db = getChatDbConnection();
         $stmt = $db->query($sql);
@@ -146,6 +146,7 @@ function addMessage() {
     error_log('addMessage\n', 3, '/var/tmp/php.log');
     $request = Slim::getInstance()->request();
     $message = json_decode($request->getBody());
+
     $sql = "INSERT INTO message (msg_time, username, contents) VALUES (NOW(), :username, :contents)";
     try {
         $db = getChatDbConnection();

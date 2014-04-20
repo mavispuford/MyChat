@@ -13,6 +13,7 @@
 
     <!-- Custom styles -->
     <link href="css/jumbotron-narrow.css" rel="stylesheet">
+    <link href="css/chat.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,10 +32,12 @@
         <h3 class="text-muted">MyChat</h3>
     </div>
 
-    <div class="jumbotron">
-<ul>
-    <li ng-repeat="message in messages"><span title="{{message.msg_time}}">{{message.username}}: {{message.contents}}</span></li>
-</ul>
+    <div class="jumbotron" id="chatbox">
+        <table class="table table-striped">
+            <tr ng-repeat="message in messages">
+                <td><span title="{{message.msg_time}}" id="msg_id-{{message.id}}">{{message.username}}: {{message.contents}}</span></td>
+            </tr>
+        </table>
 <!--                    --><?php //require 'mychat.php' ?>
     </div>
 

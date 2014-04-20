@@ -48,21 +48,30 @@ function WineDetailCtrl(Wine) {
 
 }
 
-function MyChatCtrl($scope,$http){
+function MyChatCtrl($scope,$http, $location, $anchorScroll){
     $scope.messages = [];
 
     $http.get("/api/messages")
         .success(function(data, status, headers, config){
             console.log("messages retrieved successfully");
             $scope.messages = data;
+//            console.log($scope.messages);
         });
 
     $scope.addMessage = function() {
+        if (!$scope.username)
+        {
+            $scope.username = 'Anonymous';
+        }
+
         $http.post("/api/messages",{'username': $scope.username, 'contents': $scope.contents})
             .success(function(data, status, headers, config){
-                console.log("inserted Successfully");
-            });
+                console.log("inserted Successfully: " + data.contents);
+                $scope.messages.push(data);
+                $location.hash('msg_id-' + data.id);
+                $anchorScroll();
 
-//        $scope.messages.push($scope.username + ': ' + $scope.contents);
+                $scope.contents = '';
+            });
     }
 }
