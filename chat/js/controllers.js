@@ -48,11 +48,15 @@ function WineDetailCtrl(Wine) {
 
 }
 
-function MyChatCtrl(){
-    this.addMessage = function ($username, $contents) {
-        $http.post("/api/messages",{'username': $username, 'contents': $contents})
+function MyChatCtrl($scope,$http){
+    $scope.messages = [];
+
+    $scope.addMessage = function() {
+        $http.post("/api/messages",{'username': $scope.username, 'contents': $scope.contents})
             .success(function(data, status, headers, config){
                 console.log("inserted Successfully");
             });
+
+        $scope.messages.push($scope.username + ': ' + $scope.contents);
     }
 }
