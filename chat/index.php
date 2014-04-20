@@ -35,10 +35,9 @@
     <div class="jumbotron" id="chatbox">
         <table class="table table-striped">
             <tr ng-repeat="message in messages">
-                <td><span title="{{message.msg_time}}" id="msg_id-{{message.id}}">{{message.username}}: {{message.contents}}</span></td>
+                <td><span title="{{message.msg_time}}" id="msg_id-{{message.id}}"><b>{{message.username}}</b>: {{message.contents}}</span></td>
             </tr>
         </table>
-<!--                    --><?php //require 'mychat.php' ?>
     </div>
 
     <div class="row">

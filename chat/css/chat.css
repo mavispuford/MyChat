@@ -2,11 +2,14 @@
 
     width: auto;
     height: 30em;
-    line-height: 2em;
+    line-height: 1em;
     border: 1px solid #ccc;
     padding: 1em;
     margin: 0;
     overflow: scroll;
     overflow-x: hidden;
+    word-wrap: break-word;
+    word-break: break-all;
+    /*table-layout: fixed;*/
 
 }

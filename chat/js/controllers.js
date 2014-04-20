@@ -56,6 +56,10 @@ function MyChatCtrl($scope,$http, $location, $anchorScroll){
             console.log("messages retrieved successfully");
             $scope.messages = data;
 //            console.log($scope.messages);
+
+            // Scroll to the newest message
+            $location.hash('msg_id-' + $scope.messages[$scope.messages.length - 1].id);
+            $anchorScroll();
         });
 
     $scope.addMessage = function() {
@@ -68,9 +72,12 @@ function MyChatCtrl($scope,$http, $location, $anchorScroll){
             .success(function(data, status, headers, config){
                 console.log("inserted Successfully: " + data.contents);
                 $scope.messages.push(data);
+
+                // Scroll to the newly-added message
                 $location.hash('msg_id-' + data.id);
                 $anchorScroll();
 
+                // Clear the user's message box
                 $scope.contents = '';
             });
     }
