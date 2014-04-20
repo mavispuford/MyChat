@@ -51,12 +51,18 @@ function WineDetailCtrl(Wine) {
 function MyChatCtrl($scope,$http){
     $scope.messages = [];
 
+    $http.get("/api/messages")
+        .success(function(data, status, headers, config){
+            console.log("messages retrieved successfully");
+            $scope.messages = data;
+        });
+
     $scope.addMessage = function() {
         $http.post("/api/messages",{'username': $scope.username, 'contents': $scope.contents})
             .success(function(data, status, headers, config){
                 console.log("inserted Successfully");
             });
 
-        $scope.messages.push($scope.username + ': ' + $scope.contents);
+//        $scope.messages.push($scope.username + ': ' + $scope.contents);
     }
 }

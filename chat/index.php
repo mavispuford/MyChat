@@ -33,7 +33,7 @@
 
     <div class="jumbotron">
 <ul>
-    <li ng-repeat="message in messages">{{message}}</li>
+    <li ng-repeat="message in messages"><span title="{{message.msg_time}}">{{message.username}}: {{message.contents}}</span></li>
 </ul>
 <!--                    --><?php //require 'mychat.php' ?>
     </div>
