@@ -109,10 +109,15 @@ function MyChatCtrl($scope,$http, $location, $anchorScroll){
         for(var i = 0; i < emoticons.length; i++) {
             if (outputText.indexOf(emoticons[i].text) > -1) {
                 var icon = emoticons[i];
-                outputText = outputText.replace(icon.text, "<img src=\"" + icon.path + "\" width=\"" + icon.width + "\" height=\"" + icon.height + "\">");
+                var re = new RegExp(escapeRegExp(icon.text), 'g');
+                outputText = outputText.replace(re, "<img src=\"" + icon.path + "\" width=\"" + icon.width + "\" height=\"" + icon.height + "\">");
             }
         }
 
         return outputText;
+    }
+
+    function escapeRegExp(str) {
+        return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
     }
 }
