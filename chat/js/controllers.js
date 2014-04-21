@@ -54,22 +54,22 @@ function MyChatCtrl($scope,$http, $location, $anchorScroll){
     $scope.messages = [];
 
     var emoticons = [
-        {text: ":)", path: "images/emoticons/big_smile.png", width: 32, height: 32},
-        {text: ":(", path: "images/emoticons/unhappy.png", width: 32, height: 32},
-        {text: "8|", path: "images/emoticons/amazing.png", width: 32, height: 32},
-        {text: ":|", path: "images/emoticons/what.png", width: 32, height: 32},
-        {text: ":.", path: "images/emoticons/nothing.png", width: 32, height: 32},
-        {text: "$)", path: "images/emoticons/money.png", width: 32, height: 32},
-        {text: ":P", path: "images/emoticons/grimace.png", width: 32, height: 32},
-        {text: ":D", path: "images/emoticons/exciting.png", width: 32, height: 32},
-        {text: ":'(", path: "images/emoticons/cry.png", width: 32, height: 32},
-        {text: ">:(", path: "images/emoticons/anger.png", width: 32, height: 32},
-        {text: ":E", path: "images/emoticons/electric_shock.png", width: 32, height: 32},
-        {text: "*n*", path: "images/emoticons/nyan_cat.png", width: 64, height: 45},
-        {text: "*LOL*", path: "images/emoticons/what.png", width: 32, height: 32},
-        {text: ":O", path: "images/emoticons/horror.png", width: 32, height: 32},
-        {text: "*h*", path: "images/emoticons/black_heart.png", width: 32, height: 32},
-        {text: "*hh*", path: "images/emoticons/red_heart.png", width: 32, height: 32}
+        {text: ":)", path: "images/emoticons/big_smile.png", width: 32, height: 32, class:"emoticon"},
+        {text: ":(", path: "images/emoticons/unhappy.png", width: 32, height: 32, class:"emoticon"},
+        {text: "8|", path: "images/emoticons/amazing.png", width: 32, height: 32, class:"emoticon"},
+        {text: ":|", path: "images/emoticons/what.png", width: 32, height: 32, class:"emoticon"},
+        {text: ":.", path: "images/emoticons/nothing.png", width: 32, height: 32, class:"emoticon"},
+        {text: "$)", path: "images/emoticons/money.png", width: 32, height: 32, class:"emoticon"},
+        {text: ":P", path: "images/emoticons/grimace.png", width: 32, height: 32, class:"emoticon"},
+        {text: ":D", path: "images/emoticons/exciting.png", width: 32, height: 32, class:"emoticon"},
+        {text: ":'(", path: "images/emoticons/cry.png", width: 32, height: 32, class:"emoticon"},
+        {text: ">:(", path: "images/emoticons/anger.png", width: 32, height: 32, class:"emoticon"},
+        {text: ":E", path: "images/emoticons/electric_shock.png", width: 32, height: 32, class:"emoticon"},
+        {text: "*n*", path: "images/emoticons/nyan_cat.png", width: 64, height: 45, class:"nyancat"},
+        {text: "*LOL*", path: "images/emoticons/what.png", width: 32, height: 32, class:"emoticon"},
+        {text: ":O", path: "images/emoticons/horror.png", width: 32, height: 32, class:"emoticon"},
+        {text: "*h*", path: "images/emoticons/black_heart.png", width: 32, height: 32, class:"emoticon"},
+        {text: "*hh*", path: "images/emoticons/red_heart.png", width: 32, height: 32, class:"emoticon"}
     ];
 
     $http.get("/api/messages")
@@ -110,7 +110,7 @@ function MyChatCtrl($scope,$http, $location, $anchorScroll){
             if (outputText.indexOf(emoticons[i].text) > -1) {
                 var icon = emoticons[i];
                 var re = new RegExp(escapeRegExp(icon.text), 'g');
-                outputText = outputText.replace(re, "<img src=\"" + icon.path + "\" width=\"" + icon.width + "\" height=\"" + icon.height + "\">");
+                outputText = outputText.replace(re, "<span class=\"" + icon.class + "\"><img src=\"" + icon.path + "\" width=\"" + icon.width + "\" height=\"" + icon.height + "\"></span>");
             }
         }
 
