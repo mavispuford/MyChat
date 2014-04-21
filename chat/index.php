@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="MyChatApp">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-sanitize.js" type="text/javascript"></script>
 <!--    <script src="lib/angular-0.9.19.min.js"></script>-->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,7 +36,7 @@
     <div class="jumbotron" id="chatbox">
         <table class="table table-striped">
             <tr ng-repeat="message in messages">
-                <td><span title="{{message.msg_time}}" id="msg_id-{{message.id}}"><b>{{message.username}}</b>: {{message.contents}}</span></td>
+                <td><span title="{{message.msg_time}}" id="msg_id-{{message.id}}"><b>{{message.username}}</b>: <span ng-bind-html-unsafe="getMessageText(message)"></span></span></td>
             </tr>
         </table>
     </div>
@@ -58,6 +59,7 @@
 
     <div class="footer">
         <p>&copy; Blake Ross 2014</p>
+        <p>Emoticons &copy; <a href="http://rokey.deviantart.com/art/The-Blacy-11327960">Rokey</a></p>
     </div>
 
 </div>
