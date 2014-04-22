@@ -44,7 +44,7 @@
     <div class="row">
         <form ng-submit="addMessage()">
             <div class="col-lg-8">
-                <input type="text" class="form-control" ng-model="contents" placeholder="Message"/>
+                <input type="text" class="form-control" ng-model="contents" placeholder="Message" autofocus/>
             </div>
             <div class="col-lg-4">
                 <input type="text" class="form-control" ng-model="username" placeholder="Anonymous"/>

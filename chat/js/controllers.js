@@ -1,57 +1,59 @@
 angular.module('MyChatApp',['ngSanitize'])
 
-function RouteCtrl($route) {
-
-    var self = this;
-
-    $route.when('/wines', {template:'tpl/welcome.html'});
-
-    $route.when('/wines/:wineId', {template:'tpl/wine-details.html', controller:WineDetailCtrl});
-
-    $route.otherwise({redirectTo:'/wines'});
-
-    $route.onChange(function () {
-        self.params = $route.current.params;
-    });
-
-    $route.parent(this);
-
-    this.addWine = function () {
-        window.location = "#/wines/add";
-    };
-
-}
-
-function WineListCtrl(Wine) {
-
-    this.wines = Wine.query();
-
-}
-
-function WineDetailCtrl(Wine) {
-
-    this.wine = Wine.get({wineId:this.params.wineId});
-
-
-    this.saveWine = function () {
-        if (this.wine.id > 0)
-            this.wine.$update({wineId:this.wine.id});
-        else
-            this.wine.$save();
-        window.location = "#/wines";
-    }
-
-    this.deleteWine = function () {
-        this.wine.$delete({wineId:this.wine.id}, function() {
-            alert('Wine ' + wine.name + ' deleted')
-            window.location = "#/wines";
-        });
-    }
-
-}
+//function RouteCtrl($route) {
+//
+//    var self = this;
+//
+//    $route.when('/wines', {template:'tpl/welcome.html'});
+//
+//    $route.when('/wines/:wineId', {template:'tpl/wine-details.html', controller:WineDetailCtrl});
+//
+//    $route.otherwise({redirectTo:'/wines'});
+//
+//    $route.onChange(function () {
+//        self.params = $route.current.params;
+//    });
+//
+//    $route.parent(this);
+//
+//    this.addWine = function () {
+//        window.location = "#/wines/add";
+//    };
+//
+//}
+//
+//function WineListCtrl(Wine) {
+//
+//    this.wines = Wine.query();
+//
+//}
+//
+//function WineDetailCtrl(Wine) {
+//
+//    this.wine = Wine.get({wineId:this.params.wineId});
+//
+//
+//    this.saveWine = function () {
+//        if (this.wine.id > 0)
+//            this.wine.$update({wineId:this.wine.id});
+//        else
+//            this.wine.$save();
+//        window.location = "#/wines";
+//    }
+//
+//    this.deleteWine = function () {
+//        this.wine.$delete({wineId:this.wine.id}, function() {
+//            alert('Wine ' + wine.name + ' deleted')
+//            window.location = "#/wines";
+//        });
+//    }
+//
+//}
 
 function MyChatCtrl($scope,$http, $location, $anchorScroll){
     $scope.messages = [];
+    var snd_nyan = new Audio("resources/nyan_cut.mp3");
+    var snd_msg = new Audio("resources/water-droplet-1.mp3");
 
     var emoticons = [
         {text: ":)", path: "images/emoticons/big_smile.png", width: 32, height: 32, class:"emoticon"},
@@ -100,6 +102,13 @@ function MyChatCtrl($scope,$http, $location, $anchorScroll){
 
                 // Clear the user's message box
                 $scope.contents = '';
+
+                if (data.contents.indexOf("*n*") > -1){
+                    snd_nyan.play();
+                }
+                else {
+                    snd_msg.play();
+                }
             });
     }
 
