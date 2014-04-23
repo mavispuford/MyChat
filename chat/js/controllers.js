@@ -19,7 +19,7 @@ function MyChatCtrl($scope,$http, $location, $anchorScroll, $timeout, $filter){
         {text: ">:(", path: "images/emoticons/anger.png", width: 32, height: 32, class:"emoticon"},
         {text: ":E", path: "images/emoticons/electric_shock.png", width: 32, height: 32, class:"emoticon"},
         {text: "*n*", path: "images/emoticons/nyan_cat.png", width: 64, height: 45, class:"nyancat"},
-        {text: "*LOL*", path: "images/emoticons/what.png", width: 32, height: 32, class:"emoticon"},
+        {text: "*LOL*", path: "images/emoticons/haha.png", width: 32, height: 32, class:"emoticon"},
         {text: ":O", path: "images/emoticons/horror.png", width: 32, height: 32, class:"emoticon"},
         {text: "*h*", path: "images/emoticons/black_heart.png", width: 32, height: 32, class:"emoticon"},
         {text: "*hh*", path: "images/emoticons/red_heart.png", width: 32, height: 32, class:"emoticon"}
