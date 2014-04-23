@@ -1,4 +1,7 @@
-angular-cellar
+MyChat
 ==============
 
-Reboot of angularjs cellar application.  This is a NEW version of angular-cellar!
+A simple chat web application that uses angularjs and a MySQL
+
+>NOTE: This is probably not the best way to go about making a chat room.  This is only for demonstration purposes,
+and would most likely tank on an actual website.
