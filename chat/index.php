@@ -26,10 +26,10 @@
 <body>
 <div ng-controller="MyChatCtrl" class="container">
     <div class="header">
-        <ul class="nav nav-pills pull-right">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-        </ul>
+<!--        <ul class="nav nav-pills pull-right">-->
+<!--            <li class="active"><a href="#">Home</a></li>-->
+<!--            <li><a href="#">About</a></li>-->
+<!--        </ul>-->
         <h3 class="text-muted">MyChat</h3>
     </div>
 
@@ -58,8 +58,8 @@
     </div>
 
     <div class="footer">
-        <p>&copy; Blake Ross 2014</p>
-        <p>Emoticons &copy; <a href="http://rokey.deviantart.com/art/The-Blacy-11327960">Rokey</a></p>
+        <span>&copy; Blake Ross 2014</span>
+        <span style="float: right;">Emoticons &copy; <a href="http://rokey.deviantart.com/art/The-Blacy-11327960">Rokey</a></span>
     </div>
 
 </div>

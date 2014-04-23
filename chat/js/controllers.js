@@ -50,7 +50,7 @@ angular.module('MyChatApp',['ngSanitize'])
 //
 //}
 
-function MyChatCtrl($scope,$http, $location, $anchorScroll, $timeout){
+function MyChatCtrl($scope,$http, $location, $anchorScroll, $timeout, $filter){
     $scope.messages = [];
     var snd_nyan = new Audio("resources/nyan_cut.mp3");
     var snd_msg = new Audio("resources/water-droplet-1.mp3");
@@ -94,7 +94,14 @@ function MyChatCtrl($scope,$http, $location, $anchorScroll, $timeout){
                 .success(function(data, status, headers, config){
                     if (data !== undefined && data.length > 0) {
                         console.log(data.length + " messages retrieved successfully");
-                        data.forEach(function(msg) { $scope.messages.push({id: msg.id, username: msg.username, contents: msg.contents, msg_time: msg.msg_time}); });
+                        data.forEach(function(msg) {
+                            var found = $filter('filter')($scope.messages, {id: msg.id}, true);
+
+                            // Make sure the message wasn't just inserted and we are out of sync
+                            if (!found.length) {
+                                $scope.messages.push({id: msg.id, username: msg.username, contents: msg.contents, msg_time: msg.msg_time});
+                            }
+                        });
 
                         // Scroll to the newest message
                         $location.hash('msg_id-' + $scope.messages[$scope.messages.length - 1].id);
