@@ -50,7 +50,7 @@ angular.module('MyChatApp',['ngSanitize'])
 //
 //}
 
-function MyChatCtrl($scope,$http, $location, $anchorScroll){
+function MyChatCtrl($scope,$http, $location, $anchorScroll, $timeout){
     $scope.messages = [];
     var snd_nyan = new Audio("resources/nyan_cut.mp3");
     var snd_msg = new Audio("resources/water-droplet-1.mp3");
@@ -74,16 +74,39 @@ function MyChatCtrl($scope,$http, $location, $anchorScroll){
         {text: "*hh*", path: "images/emoticons/red_heart.png", width: 32, height: 32, class:"emoticon"}
     ];
 
-    $http.get("/api/messages")
-        .success(function(data, status, headers, config){
-            console.log("messages retrieved successfully");
-            $scope.messages = data;
-//            console.log($scope.messages);
+    $scope.refreshChat = function() {
+        if ($scope.messages === undefined || $scope.messages.length == 0){
+            $http.get("/api/messages")
+                .success(function(data, status, headers, config){
+                    if (data !== undefined && $scope.messages != data) {
+                        console.log(data.length + " messages retrieved successfully");
 
-            // Scroll to the newest message
-            $location.hash('msg_id-' + $scope.messages[$scope.messages.length - 1].id);
-            $anchorScroll();
-        });
+                        $scope.messages = data;
+
+                        // Scroll to the newest message
+                        $location.hash('msg_id-' + $scope.messages[$scope.messages.length - 1].id);
+                        $anchorScroll();
+                    }
+                });
+        }
+        else if ($scope.messages.length > 0) {
+            $http.get("/api/messages/" + $scope.messages[$scope.messages.length - 1].id)
+                .success(function(data, status, headers, config){
+                    if (data !== undefined && data.length > 0) {
+                        console.log(data.length + " messages retrieved successfully");
+                        data.forEach(function(msg) { $scope.messages.push({id: msg.id, username: msg.username, contents: msg.contents, msg_time: msg.msg_time}); });
+
+                        // Scroll to the newest message
+                        $location.hash('msg_id-' + $scope.messages[$scope.messages.length - 1].id);
+                        $anchorScroll();
+                    }
+                });
+        }
+
+        var mytimeout = $timeout($scope.refreshChat, 500);
+    }
+
+    var mytimeout = $timeout($scope.refreshChat,0);
 
     $scope.addMessage = function() {
         if (!$scope.username)

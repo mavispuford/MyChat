@@ -11,6 +11,7 @@ $app = new Slim();
 //$app->put('/wines/:id', 'updateWine');
 //$app->delete('/wines/:id', 'deleteWine');
 $app->get('/messages', 'getMessages');
+$app->get('/messages/:id', 'getMessagesAfter');
 $app->post('/messages', 'addMessage');
 
 $app->run();
@@ -131,6 +132,19 @@ $app->run();
 
 function getMessages() {
     $sql = "SELECT * FROM (SELECT * FROM message ORDER BY msg_time DESC LIMIT 10) AS `table` ORDER by msg_time ASC";
+    try {
+        $db = getChatDbConnection();
+        $stmt = $db->query($sql);
+        $messages = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo json_encode($messages);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+}
+
+function getMessagesAfter($id) {
+    $sql = "SELECT * FROM (SELECT * FROM message ORDER BY msg_time DESC LIMIT 10) AS `table` WHERE id > $id ORDER by msg_time ASC";
     try {
         $db = getChatDbConnection();
         $stmt = $db->query($sql);
