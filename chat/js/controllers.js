@@ -149,6 +149,17 @@ function MyChatCtrl($scope,$http, $location, $anchorScroll, $timeout){
         return outputText;
     }
 
+    $scope.deleteMessage = function(message) {
+        $http.delete("/api/messages/" + message.id)
+            .success(function(data, status, headers, config){
+                console.log("Deleted " + message.id + " Successfully: ");
+
+//                if ($scope.messages !== undefined && $scope.messages.length > 0) {
+//                    $scope.messages.remove()
+//                }
+            });
+    }
+
     function escapeRegExp(str) {
         return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
     }

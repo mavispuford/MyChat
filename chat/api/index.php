@@ -13,6 +13,7 @@ $app = new Slim();
 $app->get('/messages', 'getMessages');
 $app->get('/messages/:id', 'getMessagesAfter');
 $app->post('/messages', 'addMessage');
+$app->delete('/messages/:id', 'deleteMessage');
 
 $app->run();
 
@@ -175,6 +176,19 @@ function addMessage() {
         error_log($e->getMessage(), 3, '/var/tmp/php.log');
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
+}
+
+function deleteMessage($id) {
+	$sql = "DELETE FROM message WHERE id=:id";
+	try {
+		$db = getChatDbConnection();
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("id", $id);
+		$stmt->execute();
+		$db = null;
+	} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}';
+	}
 }
 
 function getChatDbConnection() {

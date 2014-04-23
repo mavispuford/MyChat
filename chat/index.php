@@ -36,7 +36,7 @@
     <div class="jumbotron" id="chatbox">
         <table class="table table-striped">
             <tr ng-repeat="message in messages">
-                <td><span title="{{message.msg_time}}" id="msg_id-{{message.id}}"><b>{{message.username}}</b>: <span ng-bind-html-unsafe="getMessageText(message)"></span></span></td>
+                <td><span title="{{message.msg_time}}" id="msg_id-{{message.id}}"><b>{{message.username}}</b>: <span ng-bind-html-unsafe="getMessageText(message)"></span></span><button ng-click="deleteMessage(message)" class="delete_button">X</button></td>
             </tr>
         </table>
     </div>
