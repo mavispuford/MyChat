@@ -43,7 +43,9 @@ function MyChatCtrl($scope,$http, $location, $anchorScroll, $timeout, $filter){
                 .success(function(data, status, headers, config){
                     if (data !== undefined && data.length > 0) {
                         console.log(data.length + " messages retrieved successfully");
+
                         data.forEach(function(msg) {
+                            // Look for any duplicate messages
                             var found = $filter('filter')($scope.messages, {id: msg.id}, true);
 
                             // Make sure the message wasn't just inserted and we are out of sync
@@ -63,6 +65,7 @@ function MyChatCtrl($scope,$http, $location, $anchorScroll, $timeout, $filter){
     var mytimeout = $timeout($scope.refreshChat,0);
 
     $scope.addMessage = function() {
+        // Default the username to Anonymous if empty
         if (!$scope.username)
         {
             $scope.username = 'Anonymous';
@@ -80,6 +83,7 @@ function MyChatCtrl($scope,$http, $location, $anchorScroll, $timeout, $filter){
                 // Clear the user's message box
                 $scope.contents = '';
 
+                // Play sound effect
                 if (data.contents.indexOf("*n*") > -1){
                     snd_nyan.play();
                 }
@@ -93,6 +97,7 @@ function MyChatCtrl($scope,$http, $location, $anchorScroll, $timeout, $filter){
         var outputText = message.contents;
 
         for(var i = 0; i < emoticons.length; i++) {
+            // If there are any emoticons
             if (outputText.indexOf(emoticons[i].text) > -1) {
                 var icon = emoticons[i];
                 var re = new RegExp(escapeRegExp(icon.text), 'g');
@@ -108,16 +113,16 @@ function MyChatCtrl($scope,$http, $location, $anchorScroll, $timeout, $filter){
             .success(function(data, status, headers, config){
                 console.log("Deleted " + message.id + " Successfully: ");
 
-//                if ($scope.messages !== undefined && $scope.messages.length > 0) {
-//                    $scope.messages.remove()
-//                }
+                // Maybe implement $scope.messages updating code here, along with somehow alerting other clients
             });
     }
 
+    // Helps to escape any characters in a string before being passed into a new RegExp object
     function escapeRegExp(str) {
         return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
     }
 
+    // Scrolls to the newest message in the chat
     function scrollToNewestMessage() {
         // Scroll to the newest message
         $location.hash('msg_id-' + $scope.messages[$scope.messages.length - 1].id);
